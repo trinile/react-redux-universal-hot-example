@@ -34,9 +34,29 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res, {target: targetUrl});
+//Add weather endpoint for requests for temperature
+app.post('/weather', (req, res) => {
+  const zipcode = req.zipcode;
+  const options = {
+    host: 'api.openweathermap.org/',
+    path: 'data/2.5/weather?zip=' + zipcode + ',us',
+    method: 'GET',
+  };
+  let request = http.request(options, (response) => {
+    let body = '';
+    response.on('data', (data) => {
+      body += data;
+    });
+    response.on('end', () => {
+      response.send(JSON.parse(body).weather.main.temp)
+    });
+  });
+
+  request.on('error', (e) => {
+    console.log('error with request: ', e.message);
+  });
 });
+
 
 app.use('/ws', (req, res) => {
   proxy.web(req, res, {target: targetUrl + '/ws'});

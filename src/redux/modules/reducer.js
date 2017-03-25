@@ -9,12 +9,14 @@ import counter from './counter';
 import {reducer as form} from 'redux-form';
 import info from './info';
 import widgets from './widgets';
+import weather from './weather';
 
 export default combineReducers({
   routing: routerReducer,
   reduxAsyncConnect,
   auth,
   form,
+  weather,
   multireducer: multireducer({
     counter1: counter,
     counter2: counter,

@@ -104,6 +104,9 @@ export default class App extends Component {
                   Logout
                 </NavItem>
               </LinkContainer>}
+              <LinkContainer to="/weather">
+                <NavItem eventKey={8}>Weather</NavItem>
+              </LinkContainer>
             </Nav>
             {user &&
             <p className={styles.loggedInMessage + ' navbar-text'}>Logged in as <strong>{user.name}</strong>.</p>}

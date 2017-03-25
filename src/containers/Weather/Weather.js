@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 // import { WeatherButton } from './components';
 import * as weatherActions from '../redux/modules/weather';
 
+/*
+keep getting error
+*/
 @connect(
   state => ({ weather: state.weather }),
   weatherActions )
@@ -14,6 +17,7 @@ export default class Weather extends Component {
   constructor(props) {
     super(props);
 
+    // keep input local to component
     this.state = {
       input: '',
     };
@@ -26,9 +30,13 @@ export default class Weather extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.input);
     // need to handle validation
+    // dispatch weather action -> to change state.weather
     this.props.getWeather(this.state.input);
+    // reset state to empty input
+    this.setState({
+      input: '',
+    });
   }
 
   render() {
